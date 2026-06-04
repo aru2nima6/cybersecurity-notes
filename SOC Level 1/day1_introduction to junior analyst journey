@@ -1,0 +1,228 @@
+
+**Path:** SOC Level 1  
+**Room:** Security Analyst Journey (Introduction)  
+**Date completed:** [04-06-2026]  
+
+---
+
+## What is a SOC?
+
+A **Security Operations Center (SOC)** is a team of security professionals who
+monitor, detect, analyze, and respond to cybersecurity threats 24/7.
+
+Think of it as a security control room — always watching for anything suspicious
+happening inside a company's network.
+
+---
+
+## Role: Junior Security Analyst (SOC Level 1)
+Also called **L1 Analyst**.
+
+### Daily responsibilities:
+- Monitor the SIEM dashboard for incoming security alerts
+- Review and investigate tickets raised by automated tools
+- Escalate complex or confirmed threats to senior analysts
+- Cooperate with other teams (IT, HR, management) during incidents
+- Constantly learn about new attack techniques and defenses
+
+### Key point:
+A Junior Analyst is the **first line of defense**. I am the first human
+who sees an alert and decides: is this real or a false alarm?
+
+---
+
+## SOC Team Structure
+
+| Role | Name (in room) | Responsibility |
+|---|---|---|
+| Junior SOC Analyst (L1) | You | First alert review, initial investigation |
+| Senior Analyst (L2) | Will Griffin | Handles complex cases after L1 triage |
+| SOC Engineer | Corey Stevens | Builds and maintains security tools, writes alert rules |
+| SOC Manager | Emily Conway | Reports to management, keeps the team running |
+| Incident Responder | Daniel Herrera | Called only during major incidents (ransomware, breaches) |
+
+### My understanding:
+- Engineers build the tools → Analysts use those tools → Manager oversees results
+- Incident Responder only appears when something serious has been confirmed
+- As a junior analyst, your primary colleague is the Senior Analyst (Will)
+
+---
+
+## What are Tickets?
+
+In a SOC, a **ticket** is a logged record of a security alert or task that
+needs investigation and resolution.
+
+When the SIEM (or another tool) detects something suspicious, it automatically
+creates a ticket. As an analyst, your job is to:
+
+1. Open the ticket
+2. Investigate what triggered it
+3. Decide: is it a **true positive** (real threat) or **false positive** (false alarm)?
+4. Take action or close it with notes explaining your decision
+
+### Analogy:
+Think of tickets like customer support requests — except instead of a user
+complaining about a bug, it's a security tool saying "hey, something looks wrong here."
+
+---
+
+## What is a SIEM Dashboard?
+
+**SIEM** = Security Information and Event Management
+
+A SIEM collects logs from every system in a company (firewalls, servers, endpoints,
+applications) and brings them into one single place for analysts to search and monitor.
+
+### What you see on a SIEM dashboard:
+- Real-time alerts (with severity: low / medium / high / critical)
+- Event logs from across the network
+- Charts showing login attempts, traffic spikes, error rates
+- Search interface to query logs manually
+
+### Popular SIEM tools:
+- **Splunk** (very common in enterprise)
+- **IBM QRadar**
+- **Microsoft Sentinel**
+- **Elastic SIEM** (open source)
+
+### Key concept:
+The SIEM doesn't automatically stop attacks — it **detects and alerts**.
+A human analyst (you) looks at those alerts and decides what to do next.
+
+---
+
+## What is an IP Reputation Check?
+
+Every device on the internet has an IP address. Some IPs are known to be
+associated with malicious activity — malware, spam, botnets, ransomware groups, etc.
+
+An **IP reputation check** is when you look up an IP address in a threat
+intelligence database to see if it has been flagged as malicious.
+
+### Tools used for IP reputation checks:
+- **VirusTotal** (virustotal.com) — paste any IP/domain/file hash
+- **AbuseIPDB** (abuseipdb.com) — community-reported malicious IPs
+- **Shodan** (shodan.io) — shows what services an IP is running
+- **Talos Intelligence** (talosintelligence.com) — Cisco's threat intel database
+- **ThreatFox** — known malware infrastructure IPs
+
+### How to do one (step by step):
+1. You see an unusual IP in an alert or log
+2. Go to VirusTotal → click "Search" → paste the IP
+3. Check: how many vendors flagged it? What category? (malware, phishing, botnet?)
+4. Check AbuseIPDB for abuse reports and confidence score
+5. Document your findings in the ticket
+
+---
+
+## What does an analyst do when they find a malicious IP?
+
+This is the core workflow. Follow these steps:
+
+### Step 1 — Confirm it is actually malicious
+- Cross-check on multiple tools (VirusTotal + AbuseIPDB + Talos)
+- Check: is this IP in internal traffic? Is it communicating with a company device?
+- Is the traffic inbound (someone trying to get in) or outbound (a device inside
+  calling out to a bad IP — could mean malware infection)?
+
+### Step 2 — Assess the impact
+- Which device(s) communicated with the malicious IP?
+- When did this happen? How many times?
+- What protocol/port was used? (HTTP, DNS, port 443, port 4444?)
+- Is this an isolated event or ongoing communication?
+
+### Step 3 — Escalate with a clear summary
+Write in the ticket:
+- The malicious IP and what it's known for
+- Which internal device was affected
+- Timeline of events
+- Your confidence level (is this definitely malicious or possibly a false positive?)
+- Recommended action
+
+### Step 4 — Report to Senior Analyst
+You do **not** take major blocking actions alone as an L1 analyst.
+Report to the **Senior Analyst (L2)** with your full investigation notes.
+They will confirm and authorize next steps.
+
+In some SOCs, L1 analysts can take predefined containment actions (like blocking
+an IP in the firewall) if the organization has a playbook for it.
+
+---
+
+## Whom to report a malicious IP to?
+
+| Situation | Who you report to |
+|---|---|
+| Suspicious alert, unsure | Senior Analyst (L2) — Will Griffin in the room |
+| Confirmed malicious, single device | Senior Analyst → they may loop in IR |
+| Confirmed malicious, multiple devices or active breach | Senior Analyst escalates to Incident Responder (Daniel) |
+| Major company-wide incident | Incident Responder + SOC Manager (Emily) involved |
+
+**Rule of thumb:** When in doubt, escalate. In a SOC, under-escalating is worse
+than over-escalating. You never want to sit on a confirmed threat.
+
+---
+
+## What action is taken when a malicious IP is found?
+
+This depends on the severity and what the playbook says. Common actions:
+
+### Containment actions:
+- **Block the IP** at the firewall — prevent further communication
+- **Isolate the affected device** from the network (so malware can't spread)
+- **Reset credentials** if account compromise is suspected
+- **Preserve logs** — do not delete anything, evidence is needed
+
+### Investigation actions:
+- Pull all logs related to that IP from the SIEM
+- Look for lateral movement — did the attacker try to access other systems?
+- Check for persistence mechanisms (scheduled tasks, new user accounts created)
+
+### Notification actions:
+- Depending on severity: notify the affected user, IT team, or management
+- For data breaches: legal and compliance teams get involved
+- For ransomware: full incident response plan activated
+
+---
+
+## What I'll be doing as a Junior Analyst — real examples
+
+From the room:
+- Detect and stop a **data stealer** infection on a colleague's laptop
+- Analyze and stop a **phishing campaign** targeting the finance team
+- Participate in a full-scale **ransomware attack** response
+- Build **detection rules** with teammates
+- Understand how the company operates, not just the technical side
+
+---
+
+## Key Terms Summary
+
+| Term | Simple definition |
+|---|---|
+| SOC | Team that monitors and defends company security 24/7 |
+| SIEM | Tool that collects all logs and shows alerts in one dashboard |
+| Ticket | A logged alert or task that needs analyst investigation |
+| True positive | Alert is real — an actual threat exists |
+| False positive | Alert is a false alarm — no real threat |
+| IP reputation check | Looking up an IP to see if it's known to be malicious |
+| IOC | Indicator of Compromise — evidence of an attack (IP, domain, file hash) |
+| Escalation | Passing a confirmed or complex alert to a higher-level analyst |
+| Containment | Actions taken to stop a threat from spreading |
+| Playbook | Pre-written step-by-step response procedure for common attack types |
+
+---
+
+## Personal notes / things I want to remember
+
+- The SIEM shows alerts but doesn't explain them — that's the analyst's job
+- Always check an IP on multiple tools, not just one
+- Outbound traffic to a bad IP is often more serious than inbound (it may mean
+  a device is already infected and calling home)
+- Never act alone on a major finding — document and escalate
+- False positives are normal and expected; good analysts tune them over time
+
+---
+
+*Room completed on TryHackMe — SOC Level 1 path: Junior Security Analyst Intro*  
