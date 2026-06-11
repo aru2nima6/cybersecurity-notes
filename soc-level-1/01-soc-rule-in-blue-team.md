@@ -1,8 +1,7 @@
 # Room 02 — SOC Role in the Blue Team
 **Path:** SOC Level 1  
 **Platform:** TryHackMe  
-**Date completed:** [add your date]  
-**Status:** ✅ Complete
+**Date completed:** 09/06/2026
 
 ---
 
@@ -206,4 +205,166 @@ automated tools haven't detected yet.**
 
 | | |
 |---|---|
-| Main job | Find vulnerabilities by actually exploiting them in a controlled way
+| Main job | Find vulnerabilities by actually exploiting them in a controlled way|
+| Team | Red team — not part of SOC |
+| Key skills | Nmap, Burp Suite, Metasploit, social engineering, report writing |
+
+**Day in the life example:**
+> Hired to test the company's web application. Uses Burp Suite to 
+> find an SQL injection vulnerability, exploits it to access a test 
+> database, documents the full attack path, and writes a report with 
+> remediation steps.
+
+---
+
+### GRC Auditor
+
+**Checks that security policies are actually being followed.**
+
+| | |
+|---|---|
+| Main job | Conduct internal audits, assess compliance, write risk reports |
+| Team | GRC — separate from SOC |
+| Key skills | Knowledge of frameworks (ISO 27001, NIST, PCI-DSS), interviewing, documentation |
+
+**Day in the life example:**
+> Conducts a quarterly audit. Reviews whether all employees completed 
+> security awareness training, checks if access controls match the 
+> policy, and flags three gaps in a formal report to management.
+
+---
+
+### Threat Researcher
+
+**Studies attackers — their tools, techniques, and motivations.**
+
+| | |
+|---|---|
+| Main job | Research new malware, attacker groups, and emerging threats |
+| Output | Threat intelligence reports used by analysts and detection engineers |
+| Key skills | Malware analysis, dark web monitoring, OSINT, writing |
+
+**Day in the life example:**
+> Discovers a new ransomware group targeting Indian financial companies. 
+> Writes an intelligence report detailing their attack methods, 
+> indicators of compromise (IOCs), and recommended detections — 
+> shared with the SOC team to improve their defenses.
+
+---
+
+### CERT Lead — Computer Emergency Response Team Lead
+
+**Takes charge during major incidents.**
+
+| | |
+|---|---|
+| Main job | Lead the response to serious security incidents |
+| Called when | Major breach, ransomware, critical system compromise |
+| Key skills | Incident response, forensics, coordination, communication under pressure |
+
+**Day in the life example:**
+> Ransomware hits 30 company machines overnight. The CERT lead 
+> coordinates containment (isolating affected machines), evidence 
+> preservation (taking forensic images), recovery (restoring backups), 
+> and post-incident review (how did this happen and how do we prevent it).
+
+---
+
+## Internal SOC vs MSSP
+
+Two ways a company can run its security operations:
+
+| | Internal SOC | MSSP |
+|---|---|---|
+| Full name | In-house Security Operations Center | Managed Security Service Provider |
+| Who runs it | Company's own employees | External third-party security company |
+| Cost | High — salaries, tools, infrastructure | Lower — shared cost across many clients |
+| Best for | Large companies with complex needs | Smaller companies that can't afford a full SOC |
+| Control | Full control over tools and processes | Less control — depends on the provider |
+| Example | A bank runs its own 24/7 SOC team | A small startup pays CrowdStrike to monitor their alerts |
+
+**Key point:** Many entry-level SOC analyst jobs in India are at 
+MSSPs — companies like Tata Communications, Wipro, HCL, and Infosys 
+run MSSPs and hire L1 analysts regularly.
+
+---
+
+## Cyber Security Incident Response Team (CSIRT / CERT)
+
+A **CSIRT** (Computer Security Incident Response Team) is a specialized 
+group activated during serious security incidents.
+
+### Their process:
+1. **Identify** — confirm a real incident is happening
+2. **Contain** — stop the spread (isolate affected systems)
+3. **Eradicate** — remove the threat completely
+4. **Recover** — restore systems to normal operation
+5. **Post-incident review** — understand what happened and improve
+
+**Difference from SOC:**
+- SOC monitors and detects threats daily
+- CSIRT/CERT responds to confirmed major incidents
+- In many companies the same people do both
+
+---
+
+## Specialized Defensive Roles Summary
+
+| Role | Team | Focus |
+|---|---|---|
+| SOC L1 Analyst | Blue / SOC | Alert triage, first response |
+| SOC L2 Analyst | Blue / SOC | Deep investigation, mentoring L1 |
+| SOC L3 / Threat Hunter | Blue / SOC | Proactive hunting, complex cases |
+| SOC Engineer | Blue / SOC | Tool configuration and maintenance |
+| Detection Engineer | Blue / SOC | Writing and tuning detection rules |
+| SOC Manager | Blue / SOC | Team leadership and reporting |
+| CERT Lead | Blue / IR | Major incident coordination |
+| Threat Researcher | Blue / Intel | Attacker research and intelligence |
+| Penetration Tester | Red | Simulated attacks, finding weaknesses |
+| GRC Auditor | GRC | Compliance, audits, risk management |
+
+---
+
+## Key Terms from this Room
+
+| Term | Definition |
+|---|---|
+| Blue team | Defensive security team — detect, protect, respond |
+| Red team | Offensive security team — simulate attacks ethically |
+| GRC | Governance, Risk, Compliance — policy and audit focused |
+| MSSP | Managed Security Service Provider — outsourced SOC |
+| CERT / CSIRT | Incident response team activated during major incidents |
+| Threat hunting | Proactively searching for hidden threats without waiting for alerts |
+| TTP | Tactics, Techniques and Procedures — how attackers operate |
+| IOC | Indicator of Compromise — evidence an attack occurred |
+| Alert triage | Prioritizing and assessing incoming alerts quickly |
+| Escalation | Passing a case to a higher-level analyst |
+
+---
+
+## My Personal Takeaways
+
+- The SOC is just one part of a bigger security structure — red team 
+  and GRC exist alongside it
+- L1 is where everyone starts — the path to L2, L3, engineer or 
+  manager all begin here
+- MSSPs are a realistic entry point for fresher SOC analyst jobs in India
+- Incident response is a separate specialized function — not every 
+  analyst does it
+- Understanding where your role fits in the bigger picture helps you 
+  explain it clearly in interviews
+
+---
+
+## Questions I want to research further
+
+- [ ] What does a real MSSP work environment look like compared to internal SOC?
+- [ ] What certifications do L2 analysts typically have?
+- [ ] What is the difference between CSIRT and CERT exactly?
+- [ ] How does threat hunting work practically — what tools are used?
+
+---
+
+*Previous room: Junior Security Analyst Intro*  
+*Next room: [add name of next room]*  
+*Path: SOC Level 1 — TryHackMe*
