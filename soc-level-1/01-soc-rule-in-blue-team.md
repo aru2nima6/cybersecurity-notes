@@ -366,5 +366,5 @@ group activated during serious security incidents.
 ---
 
 *Previous room: Junior Security Analyst Intro*  
-*Next room: [add name of next room]*  
+*Next room: Humans as Attacks vectors*  
 *Path: SOC Level 1 — TryHackMe*
