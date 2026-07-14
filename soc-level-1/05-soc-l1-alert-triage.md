@@ -1,109 +1,115 @@
 # Room 05 — SOC L1 Alert Triage
+
 **Path:** SOC Level 1 — SOC Team Internals
+
 **Platform:** TryHackMe  
-
+ 
 ---
-
+ 
 ## Core Concept
-
-A SOC does not have the time or manpower to investigate every alert 
-in full depth. **Triage** is the process of quickly sorting incoming 
-alerts by severity and likelihood so analysts spend their limited 
-time on the alerts that actually matter — without missing a real 
-attack buried in the noise.
-
+ 
+A SOC can't manually review millions of raw logs a day. **Alerts** 
+exist to filter that noise down to a manageable number of 
+suspicious events — turning millions of logs into dozens of alerts 
+an analyst can actually triage.
+ 
 ---
-
-## Why Triage Matters
-
-- A busy SOC can receive **thousands of alerts per day**
-- Most alerts are false positives or low-risk noise
-- Analysts have limited time — triage decides **what gets looked 
-  at first, and what gets looked at at all**
-- Poor triage leads to either alert fatigue (missing real attacks) 
-  or wasted effort (chasing noise)
-
+ 
+## From Events to Alerts
+ 
+1. An **event** happens (login, process launch, file download, etc.)
+2. The system generating it (OS, firewall, cloud provider) **logs** it
+3. Logs are shipped to a security solution (**SIEM/EDR**)
+4. If the logs match a detection rule, an **alert** is generated
 ---
-
-## The Triage Process
-
-A systematic approach to handling an alert as it comes in:
-
-1. **Initial review** — read the alert, understand what triggered it
-2. **Categorize** — what type of alert is this (malware, login 
-   anomaly, network scan, etc.)?
-3. **Assess severity/priority** — how dangerous or urgent is this, 
-   based on asset criticality and potential impact?
-4. **Gather context** — pull in supporting data (logs, asset info, 
-   user info, threat intel) to judge if it's real
-5. **Decide** — close as false positive, escalate for deeper 
-   investigation, or declare an incident
-
+ 
+## Alert Management Platforms
+ 
+| Solution | Examples | Use |
+|---|---|---|
+| SIEM | Splunk ES, Elastic | Core alert management for most SOC teams |
+| EDR/NDR | MS Defender, CrowdStrike | Own alert dashboards, but usually feeds SIEM/SOAR |
+| SOAR | Splunk SOAR, Cortex SOAR | Centralises alerts from multiple sources (larger teams) |
+| ITSM | Jira, TheHive | Ticket-based alert/case tracking |
+ 
 ---
-
-## Key Factors in Prioritization
-
-| Factor | Why it matters |
+ 
+## Who's Involved in Triage
+ 
+- **L1 analyst** — reviews alerts, sorts real threats from noise, escalates to L2
+- **L2 analyst** — receives escalations, does deeper investigation and remediation
+- **SOC engineer** — makes sure alerts carry enough info to triage efficiently
+- **SOC manager** — tracks triage speed/quality so real attacks aren't missed
+---
+ 
+## Key Alert Properties
+ 
+| Property | What it tells you |
 |---|---|
-| Asset criticality | An alert on a domain controller matters more than one on a test machine |
-| Alert severity/confidence | How confident is the detection rule that this is malicious? |
-| Potential impact | Data loss, downtime, financial/reputational damage if real |
-| Threat intelligence match | Does this match a known IOC, campaign, or TTP? |
-| Frequency/pattern | Is this a one-off, or part of a recurring/escalating pattern? |
-
+| Alert Time | When the alert fired (slightly after the actual event) |
+| Alert Name | Summary of what happened, from the detection rule name |
+| Severity | Urgency — Low / Medium / High / Critical |
+| Status | New, In Progress, Closed, etc. |
+| Verdict | True Positive (real threat) or False Positive (noise) |
+| Assignee | Analyst who owns the alert |
+| Description | Rule logic, why it matters, how to investigate |
+| Alert Fields | Supporting data — hostname, command line, etc. |
+ 
 ---
-
-## False Positives vs True Positives
-
-| Term | Meaning |
-|---|---|
-| False Positive (FP) | Alert fired but there was no actual malicious activity |
-| True Positive (TP) | Alert fired and it correctly identified malicious activity |
-| False Negative (FN) | Malicious activity occurred but no alert fired |
-| True Negative (TN) | No malicious activity, and correctly no alert fired |
-
-**Goal of tuning detections:** reduce false positives without 
-increasing false negatives — a hard balance to strike.
-
+ 
+## Alert Prioritisation
+ 
+When picking an alert from the queue:
+ 
+1. **Filter** — only take new/unassigned alerts, skip ones already being worked
+2. **Sort by severity** — Critical → High → Medium → Low
+3. **Sort by time** — oldest first (an older breach likely has more attacker progress)
 ---
-
-## The 5 Ws (Triage Questions)
-
-When triaging, an analyst should be able to answer:
-
-- **Who** — who/what is involved (user, host, IP)?
-- **What** — what happened / what triggered the alert?
-- **When** — what is the timeline of events?
-- **Where** — where in the environment did this occur?
-- **Why** — why did this trigger — is it explainable/benign, or 
-  suspicious?
-
+ 
+## The Triage Flow
+ 
+**1. Initial Actions**
+Assign the alert to yourself, move it to *In Progress*, and read through 
+the name, description, and key fields.
+ 
+**2. Investigation**
+The core step — apply technical judgement in the SIEM/EDR:
+- Identify who/what is affected (user, host, network, cloud)
+- Understand the specific action described in the alert
+- Review surrounding events for suspicious activity nearby
+- Cross-check with threat intel where useful
+Some teams provide **workbooks/playbooks/runbooks** to standardise this 
+step for common alert types.
+ 
+**3. Final Actions**
+Decide **True Positive** or **False Positive**, write a comment 
+explaining the reasoning, and close the alert.
+ 
 ---
-
+ 
 ## Key Terms
-
+ 
 | Term | Definition |
 |---|---|
-| Triage | Process of sorting and prioritizing alerts by severity/urgency |
-| False positive | An alert that fired without real malicious activity |
-| True positive | An alert that correctly identified malicious activity |
-| Alert fatigue | Analyst desensitization caused by too many low-value alerts |
-| IOC | Indicator of Compromise — evidence suggesting a system was breached |
-| TTP | Tactics, Techniques, and Procedures used by an attacker |
-
+| Event | A single occurrence logged by a system (login, process, etc.) |
+| Alert | A notification generated when logs match a detection rule |
+| Alert triage | Process of reviewing, investigating, and closing an alert |
+| True Positive | Alert correctly identifies real malicious activity |
+| False Positive | Alert fires but there is no real threat |
+| Workbook/Playbook | Standardised investigation instructions for an alert type |
+ 
 ---
-
+ 
 ## Personal Takeaways
-
-- Triage is really about **time management under pressure** — not 
-  every alert deserves the same attention
-- Asset criticality changes everything — the same alert type can be 
-  a non-issue on one host and a critical incident on another
-- Answering the 5 Ws quickly is a good mental checklist to avoid 
-  jumping to conclusions too early
-- Alert fatigue is a real risk — tuning out noise carefully matters 
-  as much as catching the real threats
-
+ 
+- Alerts exist purely to make an impossible volume of logs manageable — 
+  triage is the human filter after the automated one
+- Severity and age of an alert are both good proxies for urgency — 
+  older alerts mean the attacker has had more time inside
+- Workbooks matter a lot for L1 consistency — without them, triage 
+  quality depends heavily on individual analyst experience
+- A closed alert is only as good as the comment behind it — the 
+  reasoning matters as much as the verdict
 ---
 *Previous: Systems as Attack Vectors*  
 *Next: SOC L1 Alert Reporting*
