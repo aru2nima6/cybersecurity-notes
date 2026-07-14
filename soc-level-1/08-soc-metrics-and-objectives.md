@@ -114,4 +114,4 @@ triage starts → **MTTR** → breach contained.
 
 ---
 *Previous: SOC Workbooks and Lookups*  
-*Next: [add next room]*
+*Next: Introduction to EDR*
