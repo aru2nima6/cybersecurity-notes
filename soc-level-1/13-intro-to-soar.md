@@ -1,4 +1,4 @@
-# Room 12 — Introduction to SOAR
+# Room 13 — Introduction to SOAR
 
 **Path:** SOC Level 1 — Security Solutions
 
